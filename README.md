@@ -10,7 +10,7 @@ Zero to Kubernetes development environment
 
 It leverages macOS native Hypervisor framework of using [xhyve](https://github.com/xhyve-xyz/xhyve) based [corectl](https://github.com/TheNewNormal/corectl) command line tool without any needs to use VirtualBox or similar virtualisation software.
 
-**New:** After successful install you can control `kube-solo` VM via `ksolo` cli as well. Cli resides in `~/kube-solo/bin` folder and has simple commands: `ksolo start|stop|status|ip`, just copy the `ksolo` to your pre-set path. This feature is specially handy for automation tasks.
+**New:** After successful install you can control `kube-solo` VM via `ksolo` cli as well. Cli resides in `~/kube-solo/bin` folder and has simple commands: `ksolo start|stop|status|ip`, just copy the `ksolo` to your pre-set path. This feature is especially handy for automation tasks.
 
 **Includes:** [Helm Classic](https://helm.sh) - The Kubernetes Package Manager and an option from shell to install [Deis Workflow PaaS](https://deis.com) on top of Kubernetes with a simple: `$ install_deis`
 
@@ -41,7 +41,7 @@ How to install Kube-Solo
 
 - App's files are installed to `~/kube-solo` folder
 - App will bootstrap `master+worker` Kubernetes cluster on the single VM
-- Mac user home folder is automaticly mounted via NFS (it has to work on Mac end of course) to `/Users/my_user`:`/Users/my_user` on each VM boot, check the [PV example](https://github.com/TheNewNormal/kube-solo/blob/master/examples/pv/nfs-pv-mount-on-pod.md) how to use Persistent Volumes.
+- Mac user home folder is automaticly mounted via NFS (it has to work on Mac end of course) to `/Users/my_user`:`/Users/my_user` on each VM boot, check the [PV example](https://github.com/TheNewNormal/kube-solo-osx/blob/master/examples/pv/nfs-pv-mount-on-pod.md) how to use Persistent Volumes.
 - macOS `docker` client is installed to `~/kube-solo/bin` and preset in `OS shell` to be used from there, so you can build `docker` images on the VM and use with Kubernetes
 
 **The install will do the following:**
