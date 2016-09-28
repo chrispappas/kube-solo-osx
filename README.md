@@ -4,7 +4,7 @@ Kubernetes Solo cluster for macOS
 Zero to Kubernetes development environment setup under two minutes
 ---------------
 
-**Kube-Solo for macOS** is a `status bar App` which allows in an easy way to bootstrap and control Kubernetes cluster on a standalone [CoreOS](https://coreos.com) VM machine.
+**Kube-Solo for macOS** is a `status bar App` which allows in an easy way to bootstrap and control Kubernetes cluster on a standalone [CoreOS](https://coreos.com) VM machine. VM can also be controlled via `ksolo` cli. Also VM's `docker` API is exposed to macOS, so you can build your docker images with the same app and use them with Kubernetes.
 
 ![k8s-solo](k8s-singlenode.png)
 
@@ -29,6 +29,7 @@ How to install Kube-Solo
   - **macOS 10.10.3** Yosemite or later 
   - Mac 2010 or later for this to work.
   - **Note: [Corectl App](https://github.com/TheNewNormal/corectl.app) must be installed, which will serve as `corectld` server daemon control.**
+  - [iTerm2](https://www.iterm2.com/) is required, if not found the app will install it by itself.
 
 
 ###Install:
@@ -42,7 +43,7 @@ How to install Kube-Solo
 - App will bootstrap `master+worker` Kubernetes cluster on the single VM
 - Mac user home folder is automaticly mounted via NFS (it has to work on Mac end of course) to `/Users/my_user`:`/Users/my_user` on each VM boot, check the [PV example](https://github.com/TheNewNormal/kube-solo-osx/blob/master/examples/pv/nfs-pv-mount-on-pod.md) how to use Persistent Volumes.
 - macOS `docker` client is installed to `~/kube-solo/bin` and preset in `OS shell` to be used from there, so you can build `docker` images on the VM and use with Kubernetes
-- After successful install you can control `kube-solo` VM via `ksolo` cli as well. Cli resides in `~/kube-solo/bin` and `~/bin`folders and has simple commands: `ksolo start|stop|status|ip|ssh`, just add `~/bin` to your pre-set path.
+- After successful install you can control `kube-solo` VM via `ksolo` cli as well. Cli resides in `~/kube-solo/bin` and `~/bin`folders and has simple commands: `ksolo start|stop|status|ip|ssh|shell`, just add `~/bin` to your pre-set path.
 
 **The install will do the following:**
 
@@ -50,7 +51,7 @@ How to install Kube-Solo
 * Will download latest CoreOS ISO image (if there is no such one) and run `corectl` to initialise VM 
 * When you first time do install or `Up` after destroying Kube-Solo setup, k8s binary files (with the version which was available when the App was built) get copied to VM, this allows to speed up Kubernetes setup.
 * It will install `docker, helmc, helm, deis and kubectl` clients to `~/kube-solo/bin/`
-* [Kubernetes Dashboard](http://kubernetes.io/docs/user-guide/ui/), [DNS](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/dns) and [Kubedash](https://github.com/kubernetes/kubedash) will be instlled as add-ons
+* [Kubernetes Dashboard](http://kubernetes.io/docs/user-guide/ui/) and  [DNS](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons/dns) will be instlled as add-ons
 * Via assigned static IP (it will be shown in first boot and will survive VM's reboots) you can access any port on CoreOS VM
 * Persistent sparse disk (QCow2) `data.img` will be created and mounted to `/data` for these mount binds and other folders:
 
@@ -83,13 +84,20 @@ DOCKER_HOST=tcp://192.168.64.xxx:2375
 Path to `~/kube-solo/bin` where macOS clients and shell scripts are stored
 ```
 
+###ksolo cli options:
+* `ksolo start` will start k8solo-01 VM and shell environment will be pre-set as above.
+* `ksolo stop` will stop VM
+* `ksolo status`will show VM's status
+* `ksolo ip` will show VM's IP
+* `ksolo ssh` will ssh to VM
+* `ksolo shell` will open pre-set shell
+
 ###Other menu options:
 * [Kubernetes Dashboard](http://kubernetes.io/docs/user-guide/ui/) will show nice Kubernetes Dashboard, where you can check Nodes, Pods, Replication, Deployments, Service Controllers, deploy Apps and etc.
-* [Kubedash](https://github.com/kubernetes/kubedash) is a performance analytics UI for Kubernetes Clusters
 * `Check for App updates` will check for a new app version
 * `Updates/Update Kubernetes to the latest version` will update to latest version of Kubernetes.
 * `Updates/Change Kubernetes version` will download and install specified Kubernetes version from GitHub.
-* `Updates/Update macOS helmc and deis clients` will update `helmc` and `deis` to the latest version.
+* `Updates/Update macOS helmc, helm, and deis clients` will update `helmc`, `helm` and `deis` to the latest version.
 * `Setup/` will allow you to do:
 
 ```
@@ -108,8 +116,8 @@ KubeDNS is running at http://192.168.64.3:8080/api/v1/proxy/namespaces/kube-syst
 kubernetes-dashboard is running at http://192.168.64.3:8080/api/v1/proxy/namespaces/kube-system/services/kubernetes-dashboard
 
 Cluster version:
-Client version: v1.3.2
-Server version: v1.3.2
+Client version: v1.4.0
+Server version: v1.4.0
 
 kubectl get nodes:
 NAME        STATUS    AGE
